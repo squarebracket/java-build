@@ -5,7 +5,6 @@ import * as process from 'process';
 
 async function run() {
     const jdkVersion = core.getInput('jdkVersion', { required: true });
-    console.log(`Writing out toolchains.xml for JDK ${jdkVersion}`);
     const toolchains = `
 <?xml version="1.0" encoding="UTF8"?>
 <toolchains>
@@ -24,6 +23,7 @@ async function run() {
 `;
     const dir = process.env.HOME + '/.m2';
     io.mkdirP(dir);
+    core.debug(`Writing out toolchains.xml for JDK ${jdkVersion}`);
     fs.writeFileSync(dir + '/toolchains.xml', toolchains);
 }
 

@@ -17,6 +17,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(require("@actions/core"));
+const io = __importStar(require("@actions/io"));
 const fs = __importStar(require("fs"));
 const process = __importStar(require("process"));
 function run() {
@@ -38,7 +39,10 @@ function run() {
   </toolchain>
 </toolchains>
 `;
-        fs.writeFileSync(process.env.HOME + '/.m2/toolchains.xml', toolchains);
+        const dir = process.env.HOME + '/.m2';
+        io.mkdirP(dir);
+        core.debug(`Writing out toolchains.xml for JDK ${jdkVersion}`);
+        fs.writeFileSync(dir + '/toolchains.xml', toolchains);
     });
 }
 run();
