@@ -1,0 +1,9 @@
+name: 'write out toolchains.xml'
+description: 'write out the toolchains.xml file'
+inputs:
+  jdkVersion:
+    description: 'The JDK version'
+    required: true
+runs:
+  using: 'node12'
+  main: 'lib/main.js'

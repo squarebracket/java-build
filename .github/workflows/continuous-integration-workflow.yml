@@ -1,0 +1,20 @@
+name: test
+on: [push]
+
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        jdk: [7, 8]
+    steps:
+      - uses: actions/checkout@v1
+      - name: writeout toolchains.xml file
+        uses: ./.github/actions/make-toolchains-xml
+        with:
+          jdkVersion: ${{ matrix.jdk }}
+      - name: Build the Docker image
+        run: docker build . --tag my-image-name:$(date +%s)
+        env:
+          CI_PROJECT_URL: https://github.com/${{ github.repository }}
+          JDK_VERSION: ${{ matrix.jdk }}
