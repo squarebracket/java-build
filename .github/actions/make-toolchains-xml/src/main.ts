@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+import * as io from '@actions/io';
 import * as fs from 'fs';
 import * as process from 'process';
 
@@ -21,7 +22,9 @@ async function run() {
   </toolchain>
 </toolchains>
 `;
-    fs.writeFileSync(process.env.HOME + '/.m2/toolchains.xml', toolchains);
+    const dir = process.env.HOME + '/.m2';
+    io.mkdirP(dir);
+    fs.writeFileSync(dir + '/toolchains.xml', toolchains);
 }
 
 run();    
