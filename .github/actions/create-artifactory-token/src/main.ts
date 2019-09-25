@@ -25,6 +25,10 @@ async function run() {
         const options = {
             auth: `${adminUsername}:${adminPassword}`,
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Length': Buffer.byteLength(postData)
+            },
         };
         const req = requestor.request(`${url}/api/security/token`, options, res => {
             const { statusCode } = res;
