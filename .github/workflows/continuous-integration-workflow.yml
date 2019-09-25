@@ -14,8 +14,18 @@ jobs:
         uses: ./.github/actions/make-toolchains-xml
         with:
           jdkVersion: ${{ matrix.jdk }}
-      - name: Build the Docker image
-        run: docker build . --build-arg JDK_VERSION --build-arg CI_PROJECT_URL --tag java-build:$(date +%s)
-        env:
-          CI_PROJECT_URL: https://github.com/${{ github.repository }}
-          JDK_VERSION: ${{ matrix.jdk }}
+      - name: create artifactory token
+        id: create-artifactory-token
+        uses: ./.github/actions/create-artifactory-token
+        with:
+          admin-username: admin
+          admin-password: ${{ secrets.ARTIFACTORY_TOKEN }}
+          token-username: ${{ github.actor }}
+          url: https://lmmv.jfrog.io/lmmv
+      - uses: jerray/publish-docker-action@master
+        with:
+          username: ${{ github.actor }}
+          password: ${{ steps.create-artifactory-token.outputs.artifactory-token }}
+          registry: lmmv-docker-local.jfrog.io
+          cache: true
+          auto_tag: true

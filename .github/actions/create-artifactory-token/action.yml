@@ -1,0 +1,18 @@
+name: 'create artifactory token'
+description: 'creates an artifactory token for deploying to artifactory'
+inputs:
+  admin-username:
+    description: 'The admin username to use to create the token'
+    required: true
+  admin-password:
+    description: 'The admin password/token to use to create the token'
+    required: true
+  token-username:
+    description: 'The username to associate with the token'
+    required: true
+  url:
+    description: 'The base url for artifactory'
+    required: true
+runs:
+  using: 'node12'
+  main: 'lib/main.js'
