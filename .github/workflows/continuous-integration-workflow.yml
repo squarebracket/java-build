@@ -15,7 +15,7 @@ jobs:
         with:
           jdkVersion: ${{ matrix.jdk }}
       - name: Build the Docker image
-        run: docker build . --tag my-image-name:$(date +%s)
+        run: docker build . --build-arg JDK_VERSION --build-arg CI_PROJECT_URL --tag java-build:$(date +%s)
         env:
           CI_PROJECT_URL: https://github.com/${{ github.repository }}
           JDK_VERSION: ${{ matrix.jdk }}
