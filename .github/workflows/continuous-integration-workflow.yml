@@ -29,3 +29,4 @@ jobs:
           registry: lmmv-docker-local.jfrog.io
           cache: true
           auto_tag: true
+
