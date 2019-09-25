@@ -1,5 +1,6 @@
 import * as core from '@actions/core';
 import * as http from 'http';
+import * as https from 'https';
 import { stringify } from 'querystring';
 
 async function run() {
@@ -7,6 +8,15 @@ async function run() {
     const adminPassword = core.getInput('admin-password', { required: true });
     const tokenUsername = core.getInput('token-username', { required: true });
     const url = core.getInput('url', { required: true });
+
+    let requestor;
+    if (url.startsWith('https://')) {
+        requestor = https;
+    } else if (url.startsWith('http://')) {
+        requestor = http;
+    } else {
+        throw new Error('Invalid url');
+    }
 
     const promise = new Promise((resolve, reject) => {
         const postData = stringify({
@@ -16,7 +26,7 @@ async function run() {
             auth: `${adminUsername}:${adminPassword}`,
             method: 'POST',
         };
-        const req = http.request(`${url}/api/security/token`, options, res => {
+        const req = requestor.request(`${url}/api/security/token`, options, res => {
             const { statusCode } = res;
             const contentType: any = res.headers['content-type'];
 

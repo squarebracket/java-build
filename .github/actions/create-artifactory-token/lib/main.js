@@ -18,6 +18,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(require("@actions/core"));
 const http = __importStar(require("http"));
+const https = __importStar(require("https"));
 const querystring_1 = require("querystring");
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -25,6 +26,16 @@ function run() {
         const adminPassword = core.getInput('admin-password', { required: true });
         const tokenUsername = core.getInput('token-username', { required: true });
         const url = core.getInput('url', { required: true });
+        let requestor;
+        if (url.startsWith('https://')) {
+            requestor = https;
+        }
+        else if (url.startsWith('http://')) {
+            requestor = http;
+        }
+        else {
+            throw new Error('Invalid url');
+        }
         const promise = new Promise((resolve, reject) => {
             const postData = querystring_1.stringify({
                 'username': tokenUsername
@@ -33,7 +44,7 @@ function run() {
                 auth: `${adminUsername}:${adminPassword}`,
                 method: 'POST',
             };
-            const req = http.request(`${url}/api/security/token`, options, res => {
+            const req = requestor.request(`${url}/api/security/token`, options, res => {
                 const { statusCode } = res;
                 const contentType = res.headers['content-type'];
                 let error;
