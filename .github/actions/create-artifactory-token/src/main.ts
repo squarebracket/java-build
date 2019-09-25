@@ -9,6 +9,9 @@ async function run() {
     const tokenUsername = core.getInput('token-username', { required: true });
     const url = core.getInput('url', { required: true });
 
+    const testArgs = core.getInput('test-args');
+    core.warning(testArgs);
+
     let requestor;
     if (url.startsWith('https://')) {
         requestor = https;

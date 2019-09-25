@@ -22,6 +22,9 @@ jobs:
           admin-password: ${{ secrets.ARTIFACTORY_TOKEN }}
           token-username: ${{ github.actor }}
           url: https://lmmv.jfrog.io/lmmv
+          test-args:
+            arg1: val1
+            arg2: val2
       - uses: jerray/publish-docker-action@master
         with:
           username: ${{ github.actor }}
