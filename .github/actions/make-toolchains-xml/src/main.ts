@@ -21,10 +21,8 @@ async function run() {
   </toolchain>
 </toolchains>
 `;
-    const dir = process.env.HOME + '/.m2';
-    io.mkdirP(dir);
     core.debug(`Writing out toolchains.xml for JDK ${jdkVersion}`);
-    fs.writeFileSync(dir + '/toolchains.xml', toolchains);
+    fs.writeFileSync('toolchains.xml', toolchains);
 }
 
 run();    
