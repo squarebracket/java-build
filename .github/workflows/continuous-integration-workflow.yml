@@ -22,12 +22,12 @@ jobs:
           admin-password: ${{ secrets.ARTIFACTORY_TOKEN }}
           token-username: ${{ github.actor }}
           url: https://lmmv.jfrog.io/lmmv
-      - run: docker build . --build-arg JDK_VERSION --build-arg CI_PROJECT_URL --tag lmmv-docker-local.jfrog.io/${{ github.repository }}
+      - run: docker build . --build-arg JDK_VERSION --build-arg CI_PROJECT_URL --tag lmmv-docker.jfrog.io/${{ github.repository }}
         env:
           JDK_VERSION: ${{ matrix.jdk }}
           CI_PROJECT_URL: https://github.com/${{ github.repository }}
-      - run: docker login -u ${{ github.actor }} -p ${{ steps.create-artifactory-token.outputs.artifactory-token }} lmmv-docker-local.jfrog.io
-      - run: docker push lmmv-docker-local.jfrog.io/${{ github.repository }}
+      - run: docker login -u ${{ github.actor }} -p ${{ steps.create-artifactory-token.outputs.artifactory-token }} lmmv-docker.jfrog.io
+      - run: docker push lmmv-docker.jfrog.io/${{ github.repository }}
       #- uses: jerray/publish-docker-action@master
         #with:
           #username: ${{ github.actor }}
