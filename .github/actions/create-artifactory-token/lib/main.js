@@ -26,6 +26,8 @@ function run() {
         const adminPassword = core.getInput('admin-password', { required: true });
         const tokenUsername = core.getInput('token-username', { required: true });
         const url = core.getInput('url', { required: true });
+        const testArgs = core.getInput('test-args');
+        core.warning(testArgs);
         let requestor;
         if (url.startsWith('https://')) {
             requestor = https;
@@ -38,7 +40,8 @@ function run() {
         }
         const promise = new Promise((resolve, reject) => {
             const postData = querystring_1.stringify({
-                'username': tokenUsername
+                scope: 'member-of-groups:writers',
+                username: tokenUsername,
             });
             const options = {
                 auth: `${adminUsername}:${adminPassword}`,

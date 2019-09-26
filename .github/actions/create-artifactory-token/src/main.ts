@@ -23,7 +23,8 @@ async function run() {
 
     const promise = new Promise((resolve, reject) => {
         const postData = stringify({
-            'username': tokenUsername
+            scope: 'member-of-groups:writers',
+            username: tokenUsername,
         });
         const options = {
             auth: `${adminUsername}:${adminPassword}`,
