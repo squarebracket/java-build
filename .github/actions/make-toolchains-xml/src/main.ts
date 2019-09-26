@@ -22,6 +22,7 @@ async function run() {
 </toolchains>
 `;
     core.debug(`Writing out toolchains.xml for JDK ${jdkVersion}`);
+    core.warning(process.env.GITHUB_WORKSPACE + '/toolchains.xml');
     fs.writeFileSync(process.env.GITHUB_WORKSPACE + '/toolchains.xml', toolchains);
 }
 
