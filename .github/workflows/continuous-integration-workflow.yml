@@ -30,6 +30,7 @@ jobs:
       - name: login to artifactory
         run: echo ${{ steps.create-artifactory-token.outputs.artifactory-token }} | docker login -u ${{ github.actor }} --password-stdin lmmv-docker.jfrog.io
       - run: docker push lmmv-docker.jfrog.io/${{ github.repository }}:${{ matrix.jdk }}-${{ github.sha }}
+      - run: echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login --username squarebracket --password-stdin
       - run: docker push ${{ github.repository }}:${{ matrix.jdk }}-latest
       #- uses: jerray/publish-docker-action@master
         #with:
