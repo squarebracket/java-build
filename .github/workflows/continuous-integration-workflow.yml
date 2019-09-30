@@ -39,4 +39,7 @@ jobs:
           registry: lmmv-docker-local.jfrog.io
           auto_tag: true
           build_args: JDK_VERSION=${{ matrix.jdk }},CI_PROJECT_URL=https://github.com/${{ github.repository }}
+        env:
+          JDK_VERSION_TEST: ${{ matrix.jdk }}
+          CI_PROJECT_URL_TEST: https://github.com/${{ github.repository }}
 
