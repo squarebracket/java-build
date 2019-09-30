@@ -1,7 +1,7 @@
 ARG JDK_VERSION=latest
-ARG CI_PROJECT_URL
 FROM maven:3-jdk-${JDK_VERSION}
 
+ARG CI_PROJECT_URL
 LABEL org.opencontainers.image.source="${CI_PROJECT_URL}" \
       org.opencontainers.image.title="Java Build" \
       org.opencontainers.image.description="Image meant to be used to build Java applications"
